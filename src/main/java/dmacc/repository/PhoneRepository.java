@@ -18,4 +18,4 @@ import dmacc.beans.Phone;
  */
 
 @Repository
-public interface ContactRepository extends JpaRepository<Phone, Long> { }
+public interface PhoneRepository extends JpaRepository<Phone, Long> { }
