@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert New Phone</title>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -39,14 +40,45 @@
 <body>
 
 <h1>Insert New Phone</h1>
-<form th:object="${newPhone}" th:action="@{/update/{id}(id=${newPhone.id})}" method="post">
-Brand: <input name="brand" size="20" th:field="*{brand}"><br />
-Model: <input name="model" size="20" th:field="*{model}"><br />
-Price: <input name="price" size="20" th:field="*{price}"><br />
-Release Year: <input name="releaseYear" size="20" th:field="*{releaseYear}"><br />
+<form th:object="${newPhone}" th:action="@{/update/{id}(id=${newPhone.id})}" method="post" onsubmit="return validateForm()">
+    Brand: <input name="brand" id="brand" size="20" th:field="*{brand}" required><br />
+    Model: <input name="model" id="model" size="20" th:field="*{model}" required><br />
+    Price: <input name="price" id="price" size="20" th:field="*{price}" required><br />
+    Release Year: <input name="releaseYear" id="releaseYear" size="20" th:field="*{releaseYear}" required><br />
 
-<input name="Submit" type="submit" value="submit" />
+    <input name="Submit" type="submit" value="submit" />
 </form>
+
+<script>
+    function validateForm() {
+        var brand = document.getElementById("brand").value;
+        var model = document.getElementById("model").value;
+        var price = document.getElementById("price").value;
+        var releaseYear = document.getElementById("releaseYear").value;
+
+        // Do not allow empty fields
+        if (brand.trim() === '' || model.trim() === '' || price.trim() === '' || releaseYear.trim() === '') {
+            alert("All fields are required");
+            return false;
+        }
+
+        // Ensure price is numeric
+        if (isNaN(price)) {
+            alert("Price must be a numeric value");
+            return false;
+        }
+
+        // Ensure release year is numeric
+        if (isNaN(releaseYear)) {
+            alert("Release year must be a numeric value");
+            return false;
+        }
+
+        // Submit form after everything passes
+        return true;
+    }
+</script>
+
 <a href="../viewAll">View All Phones</a>
 
 </body>
